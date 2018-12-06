@@ -1,0 +1,66 @@
+<% include partials/header %>
+ <div class="container">
+     <header class="jumbotron">
+         <div class="container">
+             <h1>Welcome To TalentExcel</h1>
+             <p>View our employee from all over the world</p>
+             <p>
+                <a class="btn btn-primary btn-large" href="/viewmap/new">Add New Employee</a>
+             </p>
+         </div>
+     </header>
+      <% var i= 0; %>
+      <% var lati =[]; %>
+      <% var lngi=[]; %>
+      <% var j=0 %>
+      <ul>
+            <% locations.forEach(function(location){ %>
+                    <% lati[i] = location["lat"] %>
+                    <% lngi[i] = location["lng"] %>
+                    <% if(employees[i] !== undefined) { %>
+                       <li>( <%= lati[i] %> , <%= lngi[i] %>) is coordinate of <%= employees[i]["address"] %> </li>
+                    <%  }  %>
+                    
+                    <% i++ %>
+            <% }); %>
+     </ul>
+            
+        <div id="map"></div>
+        <!-- <% var coordinate = {lat: 19.0484114, lng: 72.853414} %> -->
+        <script type="text/javascript">
+            function initMap(){
+            var options = {
+                zoom : 12,
+                center : {lat: 19.0484114, lng: 72.853414}
+            };
+            // The map, centered at Uluru
+          var map = new google.maps.Map(
+            document.getElementById('map'), options);
+
+            //center value
+            addMarker({lat: 19.0484114, lng: 72.853414}, "1"); 
+
+            //Issue : Loop not working =>will see
+            addMarker({lat: <%= lati[0] %> , lng: <%= lngi[0] %>},"2");
+            addMarker({lat: <%= lati[1] %> , lng: <%= lngi[1] %>},"3");
+            addMarker({lat: <%= lati[2] %> , lng: <%= lngi[2] %>},"4");
+            //for adding marker
+            function addMarker(coordinates, employeeID){
+                 var marker = new google.maps.Marker({
+                position: coordinates
+                , map: map
+                , title : "Employee" + employeeID
+                });
+            }
+        }
+
+
+        </script>
+       
+        <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBzYBhHCBrtOdFPgRigpcG44gLA5AukmhA&callback=initMap">
+        </script>
+     
+</div>
+
+<% include partials/footer %>

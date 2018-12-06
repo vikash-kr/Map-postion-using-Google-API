@@ -54,12 +54,11 @@ app.get("/", function (req, res) {
             request(url, function(error1, response1, body1){
                 if(!error && response.statusCode == 200) {
                     var parsedDataInformation = JSON.parse(body1);
-                    console.log(parsedDataInformation.result.geometry.location);
+                    console.log(parsedDataInformation.result.geometry.location + "will be to home.ejs file");
                     var coordinate = parsedDataInformation.result.geometry.location;
 
                     res.render("home", {coordinate:coordinate, employeeList:employeeList});
-                    //console.log(parsedDataInformation);
-                    console.log("");
+                    
                 }
             });
         }
